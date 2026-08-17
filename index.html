@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ceník přeprav – Království TianDe</title>
+  <style>
+    :root {
+      --plum: #6b2d5e;
+      --plum-dark: #4e1f45;
+      --plum-light: #8a3b77;
+      --plum-pale: #f5edf3;
+      --magenta: #c94f8a;
+      --gray-bg: #f8f7f8;
+      --gray-border: #e4dde2;
+      --gray-text: #6b6470;
+      --text: #2c1f29;
+      --success: #2d7a4f;
+      --success-bg: #edf7f2;
+      --warning: #7a5c1e;
+      --warning-bg: #fdf6e8;
+      --danger: #8b2222;
+      --danger-bg: #fdf0f0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--gray-bg);
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    /* HEADER */
+    .header {
+      background: linear-gradient(135deg, var(--plum-dark) 0%, var(--plum) 60%, var(--plum-light) 100%);
+      color: #fff;
+      padding: 28px 32px 24px;
+    }
+    .header-inner { max-width: 1000px; margin: 0 auto; }
+    .header-brand {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 10px;
+    }
+    .header-logo {
+      width: 40px; height: 40px; background: rgba(255,255,255,0.15);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+    }
+    .header-brand-name { font-size: 13px; opacity: 0.75; letter-spacing: 0.5px; text-transform: uppercase; }
+    .header h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+    .header-meta { font-size: 12px; opacity: 0.65; }
+    .header-badge {
+      display: inline-block; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 20px; padding: 3px 10px; font-size: 11px; margin-left: 8px; vertical-align: middle;
+    }
+
+    /* MAIN */
+    .main { max-width: 1000px; margin: 0 auto; padding: 24px 16px 48px; }
+
+    /* SECTION */
+    .section { margin-bottom: 28px; }
+    .section-header {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 12px; padding-bottom: 8px;
+      border-bottom: 2px solid var(--plum-pale);
+    }
+    .section-flag { font-size: 20px; }
+    .section-title { font-size: 15px; font-weight: 700; color: var(--plum-dark); }
+    .section-sub { font-size: 12px; color: var(--gray-text); margin-left: auto; }
+
+    /* TABLE */
+    .table-wrap { border: 1px solid var(--gray-border); border-radius: 10px; overflow: hidden; background: #fff; }
+    table { width: 100%; border-collapse: collapse; }
+    thead tr { background: var(--plum-pale); }
+    thead th {
+      padding: 10px 14px; text-align: left; font-size: 11px;
+      font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase;
+      color: var(--plum-dark); white-space: nowrap;
+    }
+    tbody tr { border-top: 1px solid var(--gray-border); }
+    tbody tr:hover { background: #fdfbfc; }
+    td { padding: 10px 14px; font-size: 13px; }
+    td.carrier { font-weight: 600; color: var(--plum-dark); }
+    td.price { font-weight: 700; color: var(--text); white-space: nowrap; }
+    td.price-dobr { font-weight: 600; color: var(--magenta); white-space: nowrap; }
+    td.price-na { color: #bbb; font-style: italic; font-size: 12px; }
+    td.note { font-size: 12px; color: var(--gray-text); }
+    .badge {
+      display: inline-block; border-radius: 4px; padding: 2px 7px;
+      font-size: 11px; font-weight: 600; vertical-align: middle; margin-right: 4px;
+    }
+    .badge-twisto { background: #e8f4fd; color: #1a6fa8; }
+    .badge-pickup { background: #eef6ee; color: #2d6e3a; }
+    .badge-courier { background: var(--plum-pale); color: var(--plum-dark); }
+    .badge-intl { background: #fff8e8; color: #7a5c1e; }
+
+    /* SUMMARY CARDS */
+    .summary-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px; margin-bottom: 28px;
+    }
+    .card {
+      background: #fff; border: 1px solid var(--gray-border); border-radius: 10px;
+      padding: 16px; display: flex; flex-direction: column; gap: 4px;
+    }
+    .card-label { font-size: 11px; color: var(--gray-text); text-transform: uppercase; letter-spacing: 0.4px; }
+    .card-value { font-size: 22px; font-weight: 800; color: var(--plum-dark); }
+    .card-sub { font-size: 12px; color: var(--gray-text); }
+    .card-accent { border-left: 3px solid var(--plum); }
+
+    /* INFO BOX */
+    .info-box {
+      background: var(--plum-pale); border: 1px solid var(--gray-border); border-radius: 8px;
+      padding: 12px 16px; font-size: 12px; color: var(--gray-text); margin-bottom: 20px;
+    }
+    .info-box strong { color: var(--plum-dark); }
+
+    /* HIDDEN TABLE */
+    .hidden-grid {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px;
+    }
+    .hidden-pill {
+      background: #f0edf0; border: 1px solid var(--gray-border); border-radius: 20px;
+      padding: 4px 12px; font-size: 12px; color: var(--gray-text);
+    }
+
+    /* FOOTER */
+    .footer {
+      text-align: center; font-size: 11px; color: var(--gray-text);
+      padding: 20px 16px; border-top: 1px solid var(--gray-border); margin-top: 16px;
+    }
+    .footer a { color: var(--plum); text-decoration: none; }
+
+    @media (max-width: 600px) {
+      .header { padding: 20px 16px; }
+      thead th:nth-child(4), td:nth-child(4) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="header-logo">📦</div>
+      <div>
+        <div class="header-brand-name">kralovstvi-tiande.cz</div>
+      </div>
+    </div>
+    <h1>Ceník přeprav <span class="header-badge">Aktivní</span></h1>
+    <div class="header-meta">Zdroj: WPJ GraphQL · Aktualizováno 17. 8. 2026 · Ceny s DPH (21 %)</div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- SUMMARY CARDS -->
+  <div class="summary-grid">
+    <div class="card card-accent">
+      <div class="card-label">Aktivní způsoby doručení</div>
+      <div class="card-value">7</div>
+      <div class="card-sub">CZ domácí přepravy</div>
+    </div>
+    <div class="card card-accent">
+      <div class="card-label">Nejlevnější přeprava</div>
+      <div class="card-value">55 Kč</div>
+      <div class="card-sub">DPD výdejní místo (online)</div>
+    </div>
+    <div class="card card-accent">
+      <div class="card-label">Zahraniční destinace</div>
+      <div class="card-value">13</div>
+      <div class="card-sub">EU + přeshraniční</div>
+    </div>
+    <div class="card card-accent">
+      <div class="card-label">Platby s příplatkem</div>
+      <div class="card-value">+50–60 Kč</div>
+      <div class="card-sub">Průměrný příplatek za dobírku</div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <strong>Twisto</strong> (kup teď, zaplať později / na třetiny) je k dispozici u Zásilkovny, Balíkovny, DPD výdejního místa a DPD kurýra — za stejnou cenu jako online platba. Dobírka je dostupná u všech CZ kurýrů; u zahraničních přeprav dobírka není.
+  </div>
+
+  <!-- CZ DOMÁCÍ -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-flag">🇨🇿</span>
+      <span class="section-title">Česká republika – domácí přepravy</span>
+      <span class="section-sub">visible = true · 7 způsobů doručení</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Dopravce / způsob</th>
+            <th>Typ</th>
+            <th>Online / Převodem</th>
+            <th>Dobírka</th>
+            <th>Poznámka</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="carrier">📮 Zásilkovna</td>
+            <td><span class="badge badge-pickup">Výdejní místo</span></td>
+            <td class="price">89 Kč</td>
+            <td class="price-dobr">140 Kč</td>
+            <td class="note">Twisto: 89 Kč</td>
+          </tr>
+          <tr>
+            <td class="carrier">📬 Balíkovna</td>
+            <td><span class="badge badge-pickup">Výdejní místo</span></td>
+            <td class="price">65 Kč</td>
+            <td class="price-dobr">116 Kč</td>
+            <td class="note">Twisto: 65 Kč</td>
+          </tr>
+          <tr>
+            <td class="carrier">🏤 Balík do balíkovny</td>
+            <td><span class="badge badge-pickup">Výdejní místo (ČP)</span></td>
+            <td class="price">63 Kč</td>
+            <td class="price-dobr">114 Kč</td>
+            <td class="note">—</td>
+          </tr>
+          <tr>
+            <td class="carrier">🚚 Balíkovna na adresu</td>
+            <td><span class="badge badge-courier">Kurýr</span></td>
+            <td class="price">69 Kč</td>
+            <td class="price-dobr">120 Kč</td>
+            <td class="note">Twisto: 69 Kč</td>
+          </tr>
+          <tr>
+            <td class="carrier">🚐 DPD výdejní místo</td>
+            <td><span class="badge badge-pickup">Výdejní místo</span></td>
+            <td class="price">89 Kč</td>
+            <td class="price-dobr">140 Kč</td>
+            <td class="note">Twisto: 89 Kč · alt. profil 55 Kč</td>
+          </tr>
+          <tr>
+            <td class="carrier">🚚 DPD doručení na adresu</td>
+            <td><span class="badge badge-courier">Kurýr</span></td>
+            <td class="price">99 Kč</td>
+            <td class="price-dobr">150 Kč</td>
+            <td class="note">Twisto: 99 Kč</td>
+          </tr>
+          <tr>
+            <td class="carrier">🚛 GLS doručení na adresu</td>
+            <td><span class="badge badge-courier">Kurýr</span></td>
+            <td class="price">109 Kč</td>
+            <td class="price-dobr">169 Kč</td>
+            <td class="note">—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SK -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-flag">🇸🇰</span>
+      <span class="section-title">Slovensko &amp; přeshraniční</span>
+      <span class="section-sub">visible = true · 3 varianty</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Dopravce / způsob</th>
+            <th>Typ</th>
+            <th>Online / Převodem</th>
+            <th>Dobírka</th>
+            <th>Poznámka</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="carrier">📮 Zásilkovna (SK)</td>
+            <td><span class="badge badge-pickup">Výdejní místo</span></td>
+            <td class="price">84 Kč</td>
+            <td class="price-dobr">135 Kč</td>
+            <td class="note">Twisto: 84 Kč</td>
+          </tr>
+          <tr>
+            <td class="carrier">📦 Packeta (SK / EU)</td>
+            <td><span class="badge badge-intl">Zahraniční</span></td>
+            <td class="price">116 Kč</td>
+            <td class="price-dobr">176 Kč</td>
+            <td class="note">—</td>
+          </tr>
+          <tr>
+            <td class="carrier">🇭🇺 Maďarsko (GLS)</td>
+            <td><span class="badge badge-intl">Zahraniční</span></td>
+            <td class="price">155–164 Kč</td>
+            <td class="price-na">nedostupná</td>
+            <td class="note">2 tarify (delivery profile)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ZAHRANIČÍ -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-flag">🌍</span>
+      <span class="section-title">Zahraniční destinace (GLS / DPD)</span>
+      <span class="section-sub">visible = true · only online platba · bez dobírky</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Destinace</th>
+            <th>Dopravce</th>
+            <th>Cena s DPH</th>
+            <th>Dobírka</th>
+            <th>Pozice v ceníku</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="carrier">🇵🇱 Polsko</td>
+            <td>GLS</td>
+            <td class="price">169 Kč</td>
+            <td class="price-na">—</td>
+            <td class="note">Blízké zahraniční</td>
+          </tr>
+          <tr>
+            <td class="carrier">🇩🇪 Německo</td>
+            <td>GLS</td>
+            <td class="price">189 Kč</td>
+            <td class="price-na">—</td>
+            <td class="note">Blízké zahraniční</td>
+          </tr>
+          <tr>
+            <td class="carrier">🇦🇹 Rakousko</td>
+            <td>DPD</td>
+            <td class="price">239 Kč</td>
+            <td class="price-na">—</td>
+            <td class="note">Střední vzdálenost</td>
+          </tr>
+          <tr>
+            <td class="carrier">🇮🇹 Itálie</td>
+            <td>GLS</td>
+            <td class="price">249 Kč</td>
+            <td class="price-na">—</td>
+            <td class="note">Střední vzdálenost</td>
+          </tr>
+          <tr>
+            <td class="carrier">🇪🇸 Španělsko</td>
+            <td>GLS</td>
+            <td class="price">259 Kč</td>
+            <td class="price-na">—</td>
+            <td class="note">Střední vzdálenost</td>
+          </tr>
+          <tr>
+            <td class="carrier">🇫🇷 Francie</td>
+            <td>GLS</td>
+            <td class="price">299 Kč</td>
+            <td class="price-na">—</td>
+            <td class="note">Střední vzdálenost</td>
+          </tr>
+          <tr>
+            <td class="carrier">🇧🇪 Belgie</td>
+            <td>GLS</td>
+            <td class="price">349 Kč</td>
+            <td class="price-na">—</td>
+            <td class="note">Vzdálenější EU</td>
+          </tr>
+          <tr>
+            <td class="carrier">🇧🇪 Belgie (tarif 2)</td>
+            <td>GLS</td>
+            <td class="price">518 Kč</td>
+            <td class="price-na">—</td>
+            <td class="note">2. delivery profil</td>
+          </tr>
+          <tr>
+            <td class="carrier">🇸🇪 Švédsko</td>
+            <td>GLS</td>
+            <td class="price">549 Kč</td>
+            <td class="price-na">—</td>
+            <td class="note">Skandinávie</td>
+          </tr>
+          <tr>
+            <td class="carrier">🇧🇬 Bulharsko</td>
+            <td>GLS</td>
+            <td class="price">779 Kč</td>
+            <td class="price-na">—</td>
+            <td class="note">Jihovýchodní EU</td>
+          </tr>
+          <tr>
+            <td class="carrier">🇭🇷 Chorvatsko</td>
+            <td>GLS</td>
+            <td class="price">849 Kč</td>
+            <td class="price-na">—</td>
+            <td class="note">Vzdálené EU</td>
+          </tr>
+          <tr>
+            <td class="carrier">🇮🇪 Irsko</td>
+            <td>GLS</td>
+            <td class="price">849 Kč</td>
+            <td class="price-na">—</td>
+            <td class="note">Vzdálené EU</td>
+          </tr>
+          <tr>
+            <td class="carrier">🇩🇰 Dánsko</td>
+            <td>GLS</td>
+            <td class="price">889 Kč</td>
+            <td class="price-na">—</td>
+            <td class="note">Skandinávie</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SKRYTÉ -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-flag">🔒</span>
+      <span class="section-title">Skryté / neaktivní způsoby doručení</span>
+      <span class="section-sub">visible = false · zákazníkovi se nezobrazují</span>
+    </div>
+    <div class="hidden-grid">
+      <span class="hidden-pill">ČP – Balík do ruky</span>
+      <span class="hidden-pill">ČP – Balík na poštu</span>
+      <span class="hidden-pill">PPL (3 varianty)</span>
+      <span class="hidden-pill">Osobní odběr (hotovost / karta / faktura)</span>
+      <span class="hidden-pill">E-mail (virtuální)</span>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<div class="footer">
+  Aktualizováno <strong>17. 8. 2026</strong> ze živého WPJ GraphQL API &mdash;
+  <a href="https://www.kralovstvi-tiande.cz/" target="_blank">kralovstvi-tiande.cz</a>
+  &nbsp;·&nbsp; Interní dokument
+</div>
+
+</body>
+</html>
