@@ -123,6 +123,17 @@
       padding: 4px 12px; font-size: 12px; color: var(--gray-text);
     }
 
+    /* FREE SHIPPING BANNER */
+    .free-box {
+      background: var(--success-bg); border: 1px solid #a8d5bc; border-left: 4px solid var(--success);
+      border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #1e5c3a; margin-bottom: 20px;
+      display: flex; align-items: flex-start; gap: 10px;
+    }
+    .free-box-icon { font-size: 20px; flex-shrink: 0; }
+    .free-box strong { color: var(--success); }
+    .badge-free { background: var(--success-bg); color: var(--success); border: 1px solid #a8d5bc; }
+    .price-free { font-weight: 700; color: var(--success); white-space: nowrap; }
+
     /* FOOTER */
     .footer {
       text-align: center; font-size: 11px; color: var(--gray-text);
@@ -147,7 +158,7 @@
       </div>
     </div>
     <h1>Ceník přeprav <span class="header-badge">Aktivní</span></h1>
-    <div class="header-meta">Zdroj: WPJ GraphQL · Aktualizováno 17. 8. 2026 · Ceny s DPH (21 %)</div>
+    <div class="header-meta">Zdroj: WPJ GraphQL · Aktualizováno 19. 8. 2026 · Ceny s DPH (21 %)</div>
   </div>
 </div>
 
@@ -175,8 +186,21 @@
       <div class="card-value">+50–60 Kč</div>
       <div class="card-sub">Průměrný příplatek za dobírku</div>
     </div>
+    <div class="card card-accent" style="border-left-color: var(--success);">
+      <div class="card-label">Doprava zdarma</div>
+      <div class="card-value" style="color: var(--success);">od 1 600 Kč</div>
+      <div class="card-sub">Balíkovna (výdejní místo i kurýr na adresu)</div>
+    </div>
   </div>
 
+  <div class="free-box">
+    <div class="free-box-icon">🚚</div>
+    <div>
+      <strong>Doprava zdarma</strong> při nákupu <strong>nad 1&nbsp;600 Kč</strong> — platí pro <strong>Balíkovnu na adresu</strong> a <strong>Balík do Balíkovny</strong>.
+      Ostatní dopravci (Zásilkovna, DPD, GLS) standardní dopravu zdarma nenabízejí.
+      Během akce <em>Týden poštovného zdarma</em> je Balíkovna zdarma již od <strong>900 Kč</strong>.
+    </div>
+  </div>
   <div class="info-box">
     <strong>Twisto</strong> (kup teď, zaplať později / na třetiny) je k dispozici u Zásilkovny, Balíkovny, DPD výdejního místa a DPD kurýra — za stejnou cenu jako online platba. Dobírka je dostupná u všech CZ kurýrů; u zahraničních přeprav dobírka není.
   </div>
@@ -212,21 +236,21 @@
             <td><span class="badge badge-pickup">Výdejní místo</span></td>
             <td class="price">65 Kč</td>
             <td class="price-dobr">116 Kč</td>
-            <td class="note">Twisto: 65 Kč</td>
+            <td class="note">Twisto: 65 Kč &middot; <span class="badge badge-free">🔓 zdarma od 1 600 Kč</span></td>
           </tr>
           <tr>
             <td class="carrier">🏤 Balík do balíkovny</td>
             <td><span class="badge badge-pickup">Výdejní místo (ČP)</span></td>
             <td class="price">63 Kč</td>
             <td class="price-dobr">114 Kč</td>
-            <td class="note">—</td>
+            <td class="note"><span class="badge badge-free">🔓 zdarma od 1 600 Kč</span></td>
           </tr>
           <tr>
             <td class="carrier">🚚 Balíkovna na adresu</td>
             <td><span class="badge badge-courier">Kurýr</span></td>
             <td class="price">69 Kč</td>
             <td class="price-dobr">120 Kč</td>
-            <td class="note">Twisto: 69 Kč</td>
+            <td class="note">Twisto: 69 Kč &middot; <span class="badge badge-free">🔓 zdarma od 1 600 Kč</span></td>
           </tr>
           <tr>
             <td class="carrier">🚐 DPD výdejní místo</td>
@@ -433,7 +457,7 @@
 </div><!-- /main -->
 
 <div class="footer">
-  Aktualizováno <strong>17. 8. 2026</strong> ze živého WPJ GraphQL API &mdash;
+  Aktualizováno <strong>19. 8. 2026</strong> ze živého WPJ GraphQL API &mdash;
   <a href="https://www.kralovstvi-tiande.cz/" target="_blank">kralovstvi-tiande.cz</a>
   &nbsp;·&nbsp; Interní dokument
 </div>
